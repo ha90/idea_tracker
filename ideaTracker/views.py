@@ -13,6 +13,9 @@ def index(request):
     }
     return HttpResponse(template.render(context, request));
 
+def add(request):
+    return render(request, 'ideaTracker/add.html', {})
+
 def detail(request, idea_id):
     try:
         idea = Idea.objects.get(pk=idea_id)
