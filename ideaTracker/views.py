@@ -1,5 +1,5 @@
 from django.shortcuts import render
-from django.http import HttpResponse, Http404
+from django.http import HttpResponse, Http404, HttpResponseRedirect
 from django.template import loader
 
 from .models import Idea
@@ -14,7 +14,17 @@ def index(request):
     return HttpResponse(template.render(context, request));
 
 def add(request):
-    return render(request, 'ideaTracker/add.html', {})
+    if request.method == 'POST':
+        try:
+            title = request.POST['title']
+            desc  = request.POST['desc']
+        except (KeyError):
+            return HttpResponse("Please fill all data")
+        else:
+            Idea.objects.create(title = title, description = desc)
+            return HttpResponseRedirect('/ideaTracker/')
+    else:
+        return render(request, 'ideaTracker/add.html', {})
 
 def detail(request, idea_id):
     try:

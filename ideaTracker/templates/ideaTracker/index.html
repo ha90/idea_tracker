@@ -1,7 +1,8 @@
+<h1> Idea List </h1>
 {% if idea_list %}
     <ul>
     {% for idea in idea_list %}
-    <li><a href="{% url 'ideaTracker:index' idea.id %}/">{{ idea.title }}</a></li>
+    <li><a href="{% url 'ideaTracker:detail' idea.id %}/">{{ idea.title }}</a></li>
     {% endfor %}
     </ul>
 {% else %}    
