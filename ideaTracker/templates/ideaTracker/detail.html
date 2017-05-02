@@ -1,1 +1,10 @@
 <h1>{{ idea.title }}</h1>
+
+<h2>{{ idea.description }} </h2>
+<p>Created on : {{ idea.create_date }} </p>
+<p>Last modified on : {{ idea.modified_date }} </p>
+
+<form method="post">
+{% csrf_token %}
+<input type="submit" value="Delete" name="Delete">
+</form>

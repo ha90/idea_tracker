@@ -4,7 +4,7 @@ from django.template import loader
 
 from .models import Idea
 
-# Create your views here.
+# Index page showing list of ideas added
 def index(request):
     idea_list = Idea.objects.all()
     template = loader.get_template('ideaTracker/index.html')
@@ -13,6 +13,7 @@ def index(request):
     }
     return HttpResponse(template.render(context, request));
 
+# View to add an idea
 def add(request):
     if request.method == 'POST':
         try:
@@ -26,10 +27,15 @@ def add(request):
     else:
         return render(request, 'ideaTracker/add.html', {})
 
+# Detailed view of an idea
 def detail(request, idea_id):
-    try:
-        idea = Idea.objects.get(pk=idea_id)
-    except Idea.DoesNotExist:
-        raise Http404("Idea does not exist");
-    return render(request, 'ideaTracker/detail.html', {'idea': idea})
+    if request.method == 'POST':
+        Idea.objects.filter(pk=idea_id).delete()
+        return HttpResponseRedirect('/ideaTracker/')
+    else:    
+        try:
+            idea = Idea.objects.get(pk=idea_id)
+        except Idea.DoesNotExist:
+            raise Http404("Idea does not exist");
+        return render(request, 'ideaTracker/detail.html', {'idea': idea})
 
