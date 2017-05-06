@@ -7,6 +7,7 @@
 
 <form method="post">
 {% csrf_token %}
-<input type="submit" value="Edit" name="edit">
-<input type="submit" value="Delete" name="delete">
+<input type="hidden" name="idea_id" value="{{ idea.id }}"/>
+<input type="submit" value="Edit" name="edit"/>
+<input type="submit" value="Delete" name="delete"/>
 </form>

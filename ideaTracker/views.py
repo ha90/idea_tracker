@@ -24,21 +24,32 @@ def add(request):
             return HttpResponse("Please fill all data")
         else:
             #TODO make a function in utils to validated input and add
-            Idea.objects.create(title = title, description = desc, state=IdeaState.NEW)
+            Idea.objects.create(title = title, description = desc, state=IdeaState.NEW.value)
             return HttpResponseRedirect('/ideaTracker/')
     else:
         return render(request, 'ideaTracker/add.html', {})
 
 # View to edit an idea        
 def edit(request):
+    print ("View: EDIT")
     if request.method == 'POST':
-        try:
+        if 'save' in request.POST:
+            #TODO Put safety or move to common function for form validation
+            title   = request.POST['title']
+            desc    = request.POST['desc']
             idea_id = request.POST['idea_id']
-        except (KeyError):
-            return HttpResponse("Somethings wrong")
+            Idea.objects.filter(pk=idea_id).update(title = title, description = desc)
+            return HttpResponseRedirect('/ideaTracker/')
+        elif 'cancel' in request.POST:
+            return HttpResponseRedirect('/ideaTracker/')
+        elif 'idea_id' in request.POST:
+            #TODO seems redundant (present here and in detail)
+            idea_id = request.POST['idea_id']
+            #TODO put safety check for idea not present
+            idea = Idea.objects.get(pk=idea_id)
+            return render(request, 'ideaTracker/edit.html', {'idea': idea})
         else:
-            #TODO
-            return HttpResponse("Not yet available")
+            return HttpResponse("Somethings wrong")
     else:
         return HttpResponseRedirect('/ideaTracker/')
 
@@ -46,7 +57,9 @@ def edit(request):
 def detail(request, idea_id):
     if request.method == 'POST':
         if 'edit' in request.POST:
-            return render(request, 'ideaTracker/edit.html', {'idea_id': idea_id})
+            idea_id = request.POST['idea_id']
+            idea = Idea.objects.get(pk=idea_id)
+            return render(request, 'ideaTracker/edit.html', {'idea': idea})
         elif 'delete' in request.POST:
                 Idea.objects.filter(pk=idea_id).delete()
                 return HttpResponseRedirect('/ideaTracker/')
