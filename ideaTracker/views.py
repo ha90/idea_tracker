@@ -29,15 +29,32 @@ def add(request):
     else:
         return render(request, 'ideaTracker/add.html', {})
 
+# View to edit an idea        
+def edit(request):
+    if request.method == 'POST':
+        try:
+            idea_id = request.POST['idea_id']
+        except (KeyError):
+            return HttpResponse("Somethings wrong")
+        else:
+            #TODO
+            return HttpResponse("Not yet available")
+    else:
+        return HttpResponseRedirect('/ideaTracker/')
+
 # Detailed view of an idea
 def detail(request, idea_id):
     if request.method == 'POST':
-        Idea.objects.filter(pk=idea_id).delete()
-        return HttpResponseRedirect('/ideaTracker/')
+        if 'edit' in request.POST:
+            return render(request, 'ideaTracker/edit.html', {'idea_id': idea_id})
+        elif 'delete' in request.POST:
+                Idea.objects.filter(pk=idea_id).delete()
+                return HttpResponseRedirect('/ideaTracker/')
+        else:
+            return HttpResponse("Something's wrong")
     else:    
         try:
             idea = Idea.objects.get(pk=idea_id)
         except Idea.DoesNotExist:
             raise Http404("Idea does not exist");
         return render(request, 'ideaTracker/detail.html', {'idea': idea, 'state': IdeaState(idea.state).name})
-
