@@ -3,6 +3,7 @@ from django.http import HttpResponse, Http404, HttpResponseRedirect
 from django.template import loader
 
 from .models import Idea
+from .utils  import IdeaState
 
 # Index page showing list of ideas added
 def index(request):
@@ -22,7 +23,8 @@ def add(request):
         except (KeyError):
             return HttpResponse("Please fill all data")
         else:
-            Idea.objects.create(title = title, description = desc)
+            #TODO make a function in utils to validated input and add
+            Idea.objects.create(title = title, description = desc, state=IdeaState.NEW)
             return HttpResponseRedirect('/ideaTracker/')
     else:
         return render(request, 'ideaTracker/add.html', {})
@@ -37,5 +39,5 @@ def detail(request, idea_id):
             idea = Idea.objects.get(pk=idea_id)
         except Idea.DoesNotExist:
             raise Http404("Idea does not exist");
-        return render(request, 'ideaTracker/detail.html', {'idea': idea})
+        return render(request, 'ideaTracker/detail.html', {'idea': idea, 'state': IdeaState(idea.state).name})
 

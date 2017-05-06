@@ -9,4 +9,7 @@
     <p>No ideas added yet.</p>
 {% endif %}
 
-<a href="{% url 'ideaTracker:add' %}">Add more ideas</a>
+<form action="{% url 'ideaTracker:add' %}">
+{% csrf_token %}
+    <input type="submit" value="Add more ideas"/>
+</form>    
