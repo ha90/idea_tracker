@@ -1,7 +1,14 @@
 <form action="{% url 'ideaTracker:edit' %}" method="post">
 {% csrf_token %}
-Title <input type="text" name="title" value="{{ idea.title }}"/>
-Description <input type="text" name="desc" value="{{ idea.description }}"/>
+<p> Title <input type="text" name="title" value="{{ idea.title }}"/> </p>
+<p> Description <input type="text" name="desc" value="{{ idea.description }}"/></p>
+<p> State
+    <select name="state">
+        <option value="0">NEW</option>
+        <option value="1">REVIEWED</option>
+        <option value="2">IN_PROGRESS</option>
+    </select>
+</p>    
 <input type="hidden" name="idea_id" value="{{ idea.id }}"/>
 <input type="submit" name="save" value="Save"/>
 <input type="submit" name="cancel" value="Cancel"/>

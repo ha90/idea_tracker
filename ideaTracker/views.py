@@ -37,8 +37,9 @@ def edit(request):
             #TODO Put safety or move to common function for form validation
             title   = request.POST['title']
             desc    = request.POST['desc']
+            state   = request.POST['state']
             idea_id = request.POST['idea_id']
-            Idea.objects.filter(pk=idea_id).update(title = title, description = desc)
+            Idea.objects.filter(pk=idea_id).update(title = title, description = desc, state=state)
             return HttpResponseRedirect('/ideaTracker/')
         elif 'cancel' in request.POST:
             return HttpResponseRedirect('/ideaTracker/')
