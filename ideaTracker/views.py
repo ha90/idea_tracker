@@ -3,7 +3,7 @@ from django.http import HttpResponse, Http404, HttpResponseRedirect
 from django.template import loader
 
 from .models import Idea
-from .utils  import IdeaState
+from .utils  import IdeaState, getStatesInDict
 
 # Index page showing list of ideas added
 def index(request):
@@ -60,7 +60,8 @@ def detail(request, idea_id):
         if 'edit' in request.POST:
             idea_id = request.POST['idea_id']
             idea = Idea.objects.get(pk=idea_id)
-            return render(request, 'ideaTracker/edit.html', {'idea': idea})
+            ideaStates = getStatesInDict()
+            return render(request, 'ideaTracker/edit.html', {'idea': idea, 'ideaStates': ideaStates})
         elif 'delete' in request.POST:
                 Idea.objects.filter(pk=idea_id).delete()
                 return HttpResponseRedirect('/ideaTracker/')

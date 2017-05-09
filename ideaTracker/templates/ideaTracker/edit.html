@@ -4,9 +4,12 @@
 <p> Description <input type="text" name="desc" value="{{ idea.description }}"/></p>
 <p> State
     <select name="state">
-        <option value="0">NEW</option>
+        {% for key, value in ideaStates.items %}
+            <option {% if key == idea.state %} selected="selected" {% endif %} value="{{ key }}">{{ value }}</option>
+        <!--option value="0">NEW</option>
         <option value="1">REVIEWED</option>
-        <option value="2">IN_PROGRESS</option>
+        <option value="2">IN_PROGRESS</option-->
+        {% endfor %}
     </select>
 </p>    
 <input type="hidden" name="idea_id" value="{{ idea.id }}"/>
