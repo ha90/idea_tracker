@@ -4,6 +4,7 @@ from django.template import loader
 
 from .models import Idea
 from .utils  import IdeaState, getStatesInDict
+from datetime import datetime
 
 # Index page showing list of ideas added
 def index(request):
@@ -39,7 +40,10 @@ def edit(request):
             desc    = request.POST['desc']
             state   = request.POST['state']
             idea_id = request.POST['idea_id']
-            Idea.objects.filter(pk=idea_id).update(title = title, description = desc, state=state)
+            Idea.objects.filter(pk=idea_id).update(title = title,
+                                                   description = desc,
+                                                   state=state,
+                                                   modified_date=datetime.now())
             return HttpResponseRedirect('/ideaTracker/')
         elif 'cancel' in request.POST:
             return HttpResponseRedirect('/ideaTracker/')

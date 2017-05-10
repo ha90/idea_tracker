@@ -4,8 +4,8 @@
 <p> Description <input type="text" name="desc" value="{{ idea.description }}"/></p>
 <p> State
     <select name="state">
-        {% for key, value in ideaStates.items %}
-            <option {% if key == idea.state %} selected="selected" {% endif %} value="{{ key }}">{{ value }}</option>
+    {% for key, value in ideaStates.items %}
+        <option {% if key == idea.state %} selected="selected" {% endif %} {% if key < idea.state %} disabled {% endif %} value="{{ key }}">{{ value }}</option>
         <!--option value="0">NEW</option>
         <option value="1">REVIEWED</option>
         <option value="2">IN_PROGRESS</option-->
