@@ -1,10 +1,17 @@
 <h1> Idea List </h1>
 {% if idea_list %}
-    <ul>
+    <table style="width:100%;padding-left:40px;padding-bottom:40px">
+    <tr>
+        <td><b>Title</b></td>
+        <td><b>Description</b></td>
+    </tr>
     {% for idea in idea_list %}
-    <li><a href="{% url 'ideaTracker:detail' idea.id %}">{{ idea.title }}</a></li>
+    <tr>
+        <td><a href="{% url 'ideaTracker:detail' idea.id %}">{{ idea.title }}</a></td>
+        <td>{{ idea.description }}</td>
+    </tr>
     {% endfor %}
-    </ul>
+    </table>
 {% else %}    
     <p>No ideas added yet.</p>
 {% endif %}
