@@ -8,7 +8,7 @@ from datetime import datetime
 
 # Index page showing list of ideas added
 def index(request):
-    idea_list = Idea.objects.all()
+    idea_list = Idea.objects.all().order_by('priority')
     template = loader.get_template('ideaTracker/index.html')
     context = {
         'idea_list': idea_list,
@@ -19,13 +19,14 @@ def index(request):
 def add(request):
     if request.method == 'POST':
         try:
-            title = request.POST['title']
-            desc  = request.POST['desc']
+            title    = request.POST['title']
+            desc     = request.POST['desc']
+            priority = request.POST['priority']
         except (KeyError):
             return HttpResponse("Please fill all data")
         else:
             #TODO make a function in utils to validated input and add
-            Idea.objects.create(title = title, description = desc, state=IdeaState.NEW.value)
+            Idea.objects.create(title = title, description = desc, state=IdeaState.NEW.value, priority = priority)
             return HttpResponseRedirect('/ideaTracker/')
     else:
         return render(request, 'ideaTracker/add.html', {})
