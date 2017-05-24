@@ -3,6 +3,7 @@ from django.http import HttpResponse, Http404, HttpResponseRedirect
 from django.template import loader
 
 from .models import Idea
+from .forms import AddForm
 from .utils  import IdeaState, getStatesInDict
 from datetime import datetime
 
@@ -29,7 +30,8 @@ def add(request):
             Idea.objects.create(title = title, description = desc, state=IdeaState.NEW.value, priority = priority)
             return HttpResponseRedirect('/ideaTracker/')
     else:
-        return render(request, 'ideaTracker/add.html', {})
+        form = AddForm()
+        return render(request, 'ideaTracker/add.html', {'form' : form})
 
 # View to edit an idea        
 def edit(request):
