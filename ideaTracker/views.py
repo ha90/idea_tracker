@@ -19,6 +19,17 @@ def index(request):
 # View to add an idea
 def add(request):
     if request.method == 'POST':
+        form = AddForm(request.POST)
+        if form.is_valid():
+            title       = form.cleaned_data['title']
+            description = form.cleaned_data['description']
+            priority    = form.cleaned_data['priority']
+            Idea.objects.create(title = title,
+                                description = description,
+                                state = IdeaState.NEW.value,
+                                priority = priority)
+            return HttpResponseRedirect('/ideaTracker/')
+        """
         try:
             title    = request.POST['title']
             desc     = request.POST['desc']
@@ -29,6 +40,7 @@ def add(request):
             #TODO make a function in utils to validated input and add
             Idea.objects.create(title = title, description = desc, state=IdeaState.NEW.value, priority = priority)
             return HttpResponseRedirect('/ideaTracker/')
+        """    
     else:
         form = AddForm()
         return render(request, 'ideaTracker/add.html', {'form' : form})
