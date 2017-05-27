@@ -1,3 +1,6 @@
+<header style="background-color: none; text-align:center">
+<h1>Idea Tracker</h1>
+</header>
 <h1>{{ idea.title }}</h1>
 
 <h2>{{ idea.description }} </h2>
@@ -6,9 +9,12 @@
 <p>Created on : {{ idea.create_date }} </p>
 <p>Last modified on : {{ idea.modified_date }} </p>
 
+<form action="{% url 'ideaTracker:edit' idea.id %}">
+{% csrf_token %}
+<input type="submit" name="edit" value="Edit" />
+</form>
 <form method="post">
 {% csrf_token %}
 <input type="hidden" name="idea_id" value="{{ idea.id }}"/>
-<input type="submit" value="Edit" name="edit"/>
 <input type="submit" value="Delete" name="delete"/>
 </form>

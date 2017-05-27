@@ -1,14 +1,13 @@
-<form action="{% url 'ideaTracker:edit' %}" method="post">
+<header style="background-color: none; text-align:center">
+<h1>Idea Tracker</h1>
+</header>
+<form action="{% url 'ideaTracker:edit' idea.id %}" method="post">
 {% csrf_token %}
-<p> Title <input type="text" name="title" value="{{ idea.title }}"/> </p>
-<p> Description <input type="text" name="desc" value="{{ idea.description }}"/></p>
+{{ form }}
 <p> State
     <select name="state">
     {% for key, value in ideaStates.items %}
         <option {% if key == idea.state %} selected="selected" {% endif %} {% if key < idea.state %} disabled {% endif %} value="{{ key }}">{{ value }}</option>
-        <!--option value="0">NEW</option>
-        <option value="1">REVIEWED</option>
-        <option value="2">IN_PROGRESS</option-->
         {% endfor %}
     </select>
 </p>    
