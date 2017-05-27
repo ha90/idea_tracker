@@ -1,3 +1,6 @@
+<header style="background-color: none; text-align:center">
+<h1>Idea Tracker</h1>
+</header>
 <h1> Idea List </h1>
 {% if idea_list %}
     <table style="width:100%;padding-left:40px;padding-bottom:40px">
@@ -20,3 +23,7 @@
 {% csrf_token %}
     <input type="submit" value="Add more ideas"/>
 </form>    
+
+<footer style="position:fixed; bottom:0; text-align:center; width:100%">
+<p> Under development </p>
+</footer>
