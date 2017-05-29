@@ -1,9 +1,13 @@
+{% load static %}
+<link rel="stylesheet" href="{% static 'ideaTracker/css/core.css' %}">
 <header style="background-color: none; text-align:center">
 <h1>Idea Tracker</h1>
 </header>
-<h1> Idea List </h1>
 {% if idea_list %}
-    <table style="width:100%;padding-left:40px;padding-bottom:40px">
+    <table style="width:100%;padding-left:40px;padding-bottom:40px;">
+    <tr>
+    <td><h2> Idea List </h2></td>
+    </tr>
     <tr>
         <td><b>Title</b></td>
         <td><b>Description</b></td>
